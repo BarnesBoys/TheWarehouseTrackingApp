@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Tracking App</string>
+    <string name="search_text">Search Deliveries</string>
+</resources>
