@@ -40,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    //just some more comments
+    //https://api.vworkapp.com/v4/jobs.xml?api_key=oo9E3tbGBEeEGqqUS2Nk
+    //What we need to implement the api key, but where?
 
     //Todo: create the basic workflow for the main activity assuming already logged in, i.e. onClose(), onCreate() methods.
 
