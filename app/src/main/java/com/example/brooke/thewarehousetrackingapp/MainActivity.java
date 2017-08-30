@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    //just some more comments
+
     //Todo: create the basic workflow for the main activity assuming already logged in, i.e. onClose(), onCreate() methods.
 
     //Todo: West - Firebase Push notifications logic
