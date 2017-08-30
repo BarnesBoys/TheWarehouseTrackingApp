@@ -13,9 +13,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-    }
+    protected void onStart() { super.onStart();}
 
     @Override
     protected void onResume() {
@@ -41,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
+
+    //just some more comments
 
     //Todo: create the basic workflow for the main activity assuming already logged in, i.e. onClose(), onCreate() methods.
 
