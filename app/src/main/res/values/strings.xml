@@ -2,6 +2,12 @@
     <string name="app_name">Tracking App</string>
     <string name="search_text">Search Deliveries</string>
     <string name="title_activity_settings_page">SettingsPage</string>
+    <string name="delivered_button">Delivered</string>
+    <string name="transit_button">In Transit</string>
+    <string name="tbc_button">TBC</string>
+
+
+
     <string-array name="dummy_data" >
         <item>One</item>
         <item>Two</item>
