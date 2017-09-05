@@ -1,5 +1,6 @@
 package com.example.brooke.thewarehousetrackingapp;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,16 +22,20 @@ import javax.net.ssl.SSLContext;
 
 public class TrackingPage extends AppCompatActivity {
 
+    protected String trackingNumber = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracking_page);
+        Intent intent = getIntent();
+        trackingNumber = intent.getExtras().getString("tracking_number");
     }
 
     public void trackingItem(View view) {
         new getTrackingDetails().execute();
     }
     class getTrackingDetails extends AsyncTask<String, String, String>{
+
         protected String doInBackground(String... params){
 
             try {
@@ -72,7 +77,7 @@ public class TrackingPage extends AppCompatActivity {
                 //extract the necessary access_token for interaction with nzpost api
                 String accessToken = obj.getString("access_token");
                 System.err.println(accessToken);
-                String holdParcelURL = "https://api.nzpost.co.nz/parceltrack/3.0/parcels/MR640187089NZ";
+                String holdParcelURL = "https://api.nzpost.co.nz/parceltrack/3.0/parcels/" + trackingNumber;
 
                 url = new URL(holdParcelURL);
                 conn = (HttpsURLConnection) url.openConnection();
