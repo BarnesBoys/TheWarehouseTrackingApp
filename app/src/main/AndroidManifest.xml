@@ -21,6 +21,11 @@
             android:name=".SettingsPage"
             android:label="@string/title_activity_settings_page"
             android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".TrackingPage"
+            android:label="@string/title_activity_tracking_page"
+            android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
     </application>
