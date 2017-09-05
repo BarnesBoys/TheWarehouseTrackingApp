@@ -22,15 +22,24 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
-        <!-- [START firebase_service] -->
-        <!--
+        <!-- [START Firebase service] -->
+
+        <service
+            android:name=".MyFirebaseInstanceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+<!--
         <service
         android:name=".MyFirebaseMessagingService">
         <intent-filter>
             <action android:name="com.google.firebase.MESSAGING_EVENT"/>
         </intent-filter>
-    </service>
+        </service>
 -->
+
+
 
     </application>
 
