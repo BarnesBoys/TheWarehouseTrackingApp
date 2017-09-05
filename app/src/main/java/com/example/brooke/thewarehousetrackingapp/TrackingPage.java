@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -82,9 +83,9 @@ public class TrackingPage extends AppCompatActivity {
                 conn.setReadTimeout(7000);
                 conn.setConnectTimeout(7000);
                 conn.setRequestMethod("GET");
-                //conn.setDoInput(true);
-                //conn.setDoOutput(true);
+                conn.setDoInput(true);
                 conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+                conn.setRequestProperty("client_id", "ccc7bf438e5f440dba9b0194b75a9fca");
 
                 int responseCode = conn.getResponseCode();
                 String responseMessage = "";
@@ -103,9 +104,19 @@ public class TrackingPage extends AppCompatActivity {
                 while((line = in.readLine()) !=null){
                     responseMessage += line;
                 }
-                //String responseMes = conn.getResponseMessage(); no message returned
-                System.err.println("code is: --------> " + responseCode);
-                System.err.println("message is ------>" + responseMessage);
+
+                //parsing the returned data
+                obj = new JSONObject(responseMessage);
+                JSONArray trackingEvents = obj.getJSONObject("results").getJSONArray("tracking_events") ;
+                JSONObject lastEvent  = (JSONObject) trackingEvents.get(trackingEvents.length() - 1);
+
+                //extracting the last result from tracking events to display
+                String resultEvent = lastEvent.getString("event_description");
+                String resultStatus = lastEvent.getString("status_description");
+
+                System.err.println(trackingEvents);
+                System.err.println(resultEvent);
+                System.err.println(resultStatus);
 
             } catch (Exception e) {
                 e.printStackTrace();
