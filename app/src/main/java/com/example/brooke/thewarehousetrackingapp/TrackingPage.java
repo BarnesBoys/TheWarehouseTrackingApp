@@ -1,10 +1,14 @@
 package com.example.brooke.thewarehousetrackingapp;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -16,20 +20,27 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
-
+import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.Toast;
 
 public class TrackingPage extends AppCompatActivity {
 
+    protected String trackingNumber = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracking_page);
+        Intent intent = getIntent();
+        trackingNumber = intent.getExtras().getString("tracking_number");
     }
 
     public void trackingItem(View view) {
         new getTrackingDetails().execute();
     }
     class getTrackingDetails extends AsyncTask<String, String, String>{
+
         protected String doInBackground(String... params){
 
             try {
@@ -71,7 +82,7 @@ public class TrackingPage extends AppCompatActivity {
                 //extract the necessary access_token for interaction with nzpost api
                 String accessToken = obj.getString("access_token");
                 System.err.println(accessToken);
-                String holdParcelURL = "https://api.nzpost.co.nz/parceltrack/3.0/parcels/MR640187089NZ";
+                String holdParcelURL = "https://api.nzpost.co.nz/parceltrack/3.0/parcels/" + trackingNumber;
 
                 url = new URL(holdParcelURL);
                 conn = (HttpsURLConnection) url.openConnection();
@@ -82,9 +93,9 @@ public class TrackingPage extends AppCompatActivity {
                 conn.setReadTimeout(7000);
                 conn.setConnectTimeout(7000);
                 conn.setRequestMethod("GET");
-                //conn.setDoInput(true);
-                //conn.setDoOutput(true);
+                conn.setDoInput(true);
                 conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+                conn.setRequestProperty("client_id", "ccc7bf438e5f440dba9b0194b75a9fca");
 
                 int responseCode = conn.getResponseCode();
                 String responseMessage = "";
@@ -103,9 +114,19 @@ public class TrackingPage extends AppCompatActivity {
                 while((line = in.readLine()) !=null){
                     responseMessage += line;
                 }
-                //String responseMes = conn.getResponseMessage(); no message returned
-                System.err.println("code is: --------> " + responseCode);
-                System.err.println("message is ------>" + responseMessage);
+
+                //parsing the returned data
+                obj = new JSONObject(responseMessage);
+                JSONArray trackingEvents = obj.getJSONObject("results").getJSONArray("tracking_events") ;
+                JSONObject lastEvent  = (JSONObject) trackingEvents.get(trackingEvents.length() - 1);
+
+                //extracting the last result from tracking events to display
+                String resultEvent = lastEvent.getString("event_description");
+                String resultStatus = lastEvent.getString("status_description");
+
+                System.err.println(trackingEvents);
+                System.err.println(resultEvent);
+                System.err.println(resultStatus);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -113,6 +134,35 @@ public class TrackingPage extends AppCompatActivity {
 
             return null;
         }
+
+    }
+
+    @Override
+    protected void onStart() { super.onStart();}
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }
 
