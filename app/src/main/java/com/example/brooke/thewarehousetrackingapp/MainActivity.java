@@ -44,7 +44,10 @@ public class MainActivity extends AppCompatActivity {
         deliverBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, TrackingPage.class));
+
+                String trackingNumber = "MR640187089NZ";
+
+                startActivity(new Intent(MainActivity.this, TrackingPage.class).putExtra("tracking_reference", trackingNumber));
             }
         });
 }
