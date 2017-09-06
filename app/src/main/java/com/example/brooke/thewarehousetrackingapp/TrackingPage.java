@@ -1,6 +1,5 @@
 package com.example.brooke.thewarehousetrackingapp;
 
-<<<<<<< HEAD
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -20,12 +19,7 @@ import java.util.Map;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 
-=======
-import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.Toast;
->>>>>>> origin/dummyScreen
 
 public class TrackingPage extends AppCompatActivity {
 
@@ -34,9 +28,10 @@ public class TrackingPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracking_page);
-<<<<<<< HEAD
         Intent intent = getIntent();
         trackingNumber = intent.getExtras().getString("tracking_number");
+
+        Toast.makeText(TrackingPage.this , "Track your Parcel here", Toast.LENGTH_LONG).show();
     }
 
     public void trackingItem(View view) {
@@ -80,7 +75,7 @@ public class TrackingPage extends AppCompatActivity {
                 }
                 in.close();
 
-                //put returned data in jsonobj
+                //put returned data in json object
                 JSONObject obj = new JSONObject(json);
                 //extract the necessary access_token for interaction with nzpost api
                 String accessToken = obj.getString("access_token");
@@ -110,7 +105,7 @@ public class TrackingPage extends AppCompatActivity {
                     System.err.println(entry.getKey() + " : " + entry.getValue());
                 }
 
-                //return the actually json data or the error json data
+                //return the actuall json data or the error json data
                 if(responseCode != 200) in = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
                 else in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
@@ -137,12 +132,6 @@ public class TrackingPage extends AppCompatActivity {
 
             return null;
         }
-=======
-
-        Toast.makeText(TrackingPage.this, "Track your Parcel here", Toast.LENGTH_LONG).show();
-
-
-
     }
 
     @Override
@@ -171,7 +160,6 @@ public class TrackingPage extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
->>>>>>> origin/dummyScreen
     }
 }
 
