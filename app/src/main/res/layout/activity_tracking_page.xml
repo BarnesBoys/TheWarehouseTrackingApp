@@ -4,13 +4,27 @@
     android:layout_height="match_parent">
 
 
-    <Button
-        android:id="@+id/button"
+    <EditText
+        android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="47dp"
-        android:text="track"
-        android:onClick="trackingItem"/>
+        android:layout_marginTop="93dp"
+        android:ems="10"
+        android:inputType="none"
+        android:hint="Status" />
+
+    <EditText
+        android:id="@+id/event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/status"
+        android:layout_alignStart="@+id/status"
+        android:layout_below="@+id/status"
+        android:layout_marginTop="62dp"
+        android:ems="10"
+        android:inputType="none"
+        android:hint="Event" />
+
 </RelativeLayout>

@@ -1,6 +1,8 @@
 package com.example.brooke.thewarehousetrackingapp;
 
+
 import android.content.Intent;
+
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import java.util.Map;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class TrackingPage extends AppCompatActivity {
@@ -29,15 +32,41 @@ public class TrackingPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracking_page);
         Intent intent = getIntent();
-        trackingNumber = intent.getExtras().getString("tracking_number");
+
+        //System.err.println("intent: " + intent);
+
+        if(intent == null) {
+            trackingNumber = "";
+        }
+        else{
+            Bundle extras = intent.getExtras();
+            if(extras == null) trackingNumber = "";
+            else trackingNumber = intent.getExtras().getString("tracking_reference");
+        }
+
+        //to test tracking number has been set
+        //System.err.println("tracking_ref is:  " + trackingNumber);
 
         Toast.makeText(TrackingPage.this , "Track your Parcel here", Toast.LENGTH_LONG).show();
-    }
 
-    public void trackingItem(View view) {
-        new getTrackingDetails().execute();
+        EditText status = (EditText) this.findViewById(R.id.status);
+        EditText event = (EditText) this.findViewById(R.id.event);
+        
+        status.setEnabled(false);
+        event.setEnabled(false);
+
+        new getTrackingDetails(status, event).execute();
+
     }
-    class getTrackingDetails extends AsyncTask<String, String, String>{
+    private class getTrackingDetails extends AsyncTask<String, String, String>{
+
+        public String result;
+        EditText status,event;
+
+        getTrackingDetails(EditText status, EditText event){
+            this.status = status;
+            this.event = event;
+        }
 
         protected String doInBackground(String... params){
 
@@ -67,7 +96,7 @@ public class TrackingPage extends AppCompatActivity {
 
                 //collect returned data
                 BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                String line = "";
+                String line;
                 String json = "";
                 while((line = in.readLine()) != null){
                     System.err.println(line);
@@ -80,6 +109,7 @@ public class TrackingPage extends AppCompatActivity {
                 //extract the necessary access_token for interaction with nzpost api
                 String accessToken = obj.getString("access_token");
                 System.err.println(accessToken);
+                System.err.println("<------" + trackingNumber + "------>");
                 String holdParcelURL = "https://api.nzpost.co.nz/parceltrack/3.0/parcels/" + trackingNumber;
 
                 url = new URL(holdParcelURL);
@@ -126,41 +156,24 @@ public class TrackingPage extends AppCompatActivity {
                 System.err.println(resultEvent);
                 System.err.println(resultStatus);
 
+                result = resultStatus + "///" + resultEvent;
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            return null;
+            return result;
+        }
+
+        protected void onPostExecute(String st){
+
+            String[] result = st.split("///");
+
+            status.setText(result[0]);
+            event.setText(result[1]);
         }
     }
 
-    @Override
-    protected void onStart() { super.onStart();}
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }
 
 
