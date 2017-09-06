@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -51,7 +50,7 @@ public class TrackingPage extends AppCompatActivity {
 
         EditText status = (EditText) this.findViewById(R.id.status);
         EditText event = (EditText) this.findViewById(R.id.event);
-        
+
         status.setEnabled(false);
         event.setEnabled(false);
 
