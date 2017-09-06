@@ -1,5 +1,6 @@
 package com.example.brooke.thewarehousetrackingapp;
 
+<<<<<<< HEAD
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,12 @@ import java.util.Map;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 
+=======
+import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.Toast;
+>>>>>>> origin/dummyScreen
 
 public class TrackingPage extends AppCompatActivity {
 
@@ -27,6 +34,7 @@ public class TrackingPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracking_page);
+<<<<<<< HEAD
         Intent intent = getIntent();
         trackingNumber = intent.getExtras().getString("tracking_number");
     }
@@ -129,6 +137,41 @@ public class TrackingPage extends AppCompatActivity {
 
             return null;
         }
+=======
+
+        Toast.makeText(TrackingPage.this, "Track your Parcel here", Toast.LENGTH_LONG).show();
+
+
+
+    }
+
+    @Override
+    protected void onStart() { super.onStart();}
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+>>>>>>> origin/dummyScreen
     }
 }
 

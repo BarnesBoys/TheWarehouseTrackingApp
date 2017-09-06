@@ -3,6 +3,7 @@
     package="com.example.brooke.thewarehousetrackingapp">
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -20,6 +21,7 @@
         <activity
             android:name=".SettingsPage"
             android:label="@string/title_activity_settings_page"
+<<<<<<< HEAD
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".TrackingPage">
             <intent-filter>
@@ -29,5 +31,15 @@
             </intent-filter>
         </activity>
     </application>
+=======
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".TrackingPage"
+            android:label="@string/title_activity_tracking_page"
+            android:theme="@style/AppTheme.NoActionBar">
+>>>>>>> origin/dummyScreen
 
+        </activity>
+    </application>
 </manifest>
