@@ -28,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
         undefBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, SettingsPage.class));
+                String trackingNumber = "8963062900191401HAM003DN";
+                startActivity(new Intent(MainActivity.this, TrackingPage.class).putExtra("tracking_reference", trackingNumber));
             }
         });
 
@@ -36,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
         transitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, TrackingPage.class));
+                String trackingNumber = "8963062900186301HAM003DS";
+                startActivity(new Intent(MainActivity.this, TrackingPage.class).putExtra("tracking_reference", trackingNumber));
             }
         });
 
