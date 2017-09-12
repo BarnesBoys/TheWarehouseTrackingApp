@@ -1,6 +1,5 @@
 package com.example.brooke.thewarehousetrackingapp;
 
-
 import android.content.Intent;
 
 import android.os.AsyncTask;
@@ -165,7 +164,6 @@ public class TrackingPage extends AppCompatActivity {
         }
 
         protected void onPostExecute(String st){
-
             String[] result = st.split("///");
 
             status.setText(result[0]);
