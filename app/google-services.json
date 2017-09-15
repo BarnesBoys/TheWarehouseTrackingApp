@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "653896619556",
+    "firebase_url": "https://tracking-ux.firebaseio.com",
+    "project_id": "tracking-ux",
+    "storage_bucket": "tracking-ux.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:653896619556:android:020286320bd589a7",
+        "android_client_info": {
+          "package_name": "com.example.brooke.thewarehousetrackingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "653896619556-epe4ph29jbip382t3lup2dhfqh10otqi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.brooke.thewarehousetrackingapp",
+            "certificate_hash": "4068c43da3e3e985baf068eef27c5b7b573b3fa6"
+          }
+        },
+        {
+          "client_id": "653896619556-afn2ck5hoa93pf1n8mdmdm9l55si79f1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC47f-mhgk7ryFMtYKKEqzexKhF9qvC7gk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "653896619556-afn2ck5hoa93pf1n8mdmdm9l55si79f1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
