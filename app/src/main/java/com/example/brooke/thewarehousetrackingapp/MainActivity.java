@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String trackingNumber = "MR640187089NZ";
+                String trackingNumber = "2809330617685110HAM001DS";
 
                 startActivity(new Intent(MainActivity.this, TrackingPage.class).putExtra("tracking_reference", trackingNumber));
             }

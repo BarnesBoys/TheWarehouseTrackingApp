@@ -27,38 +27,38 @@
             android:id="@+id/deliveredBtn"
             android:layout_width="126dp"
             android:layout_height="49dp"
-            android:layout_above="@+id/inTransitBtn"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="75dp"
+            android:layout_marginBottom="101dp"
             android:background="@android:color/transparent"
             android:text="@string/delivered_button"
             app:layout_constraintBottom_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_above="@+id/inTransitBtn"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
         <Button
             android:id="@+id/inTransitBtn"
             android:layout_width="123dp"
             android:layout_height="49dp"
-            android:layout_above="@+id/tbcBtn"
-            android:layout_alignLeft="@+id/deliveredBtn"
-            android:layout_alignStart="@+id/deliveredBtn"
-            android:layout_marginBottom="55dp"
+            android:layout_marginBottom="69dp"
             android:background="@android:color/transparent"
-            android:text="@string/transit_button" />
+            android:text="@string/transit_button"
+            android:layout_above="@+id/tbcBtn"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
         <Button
             android:id="@+id/tbcBtn"
             android:layout_width="118dp"
             android:layout_height="54dp"
-            android:layout_alignLeft="@+id/inTransitBtn"
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/inTransitBtn"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="26dp"
             android:background="@android:color/transparent"
             android:text="@string/tbc_button"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignRight="@+id/inTransitBtn"
+            android:layout_alignEnd="@+id/inTransitBtn" />
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
