@@ -26,13 +26,6 @@
             android:name=".TrackingPage"
             android:label="@string/title_activity_tracking_page"
             android:theme="@style/AppTheme.NoActionBar">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"> </action>
-
-                <category android:name="android.intent.category.LAUNCHER"></category>
-            </intent-filter>
-
         </activity>
     </application>
 </manifest>
