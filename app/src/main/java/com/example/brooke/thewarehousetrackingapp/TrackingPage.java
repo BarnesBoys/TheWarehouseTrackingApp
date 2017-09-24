@@ -23,8 +23,9 @@ import java.util.Map;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 
-import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class TrackingPage extends AppCompatActivity {
@@ -52,16 +53,16 @@ public class TrackingPage extends AppCompatActivity {
 
         Toast.makeText(TrackingPage.this , "Track your Parcel here", Toast.LENGTH_LONG).show();
 
-        EditText status = (EditText) this.findViewById(R.id.status);
-        EditText status2 = (EditText) this.findViewById(R.id.status2);
-        EditText status3 = (EditText) this.findViewById(R.id.status3);
-        EditText event = (EditText) this.findViewById(R.id.event);
-        EditText event2 = (EditText) this.findViewById(R.id.event2);
-        EditText event3 = (EditText) this.findViewById(R.id.event3);
-        EditText dateTime = (EditText) this.findViewById(R.id.dateTime);
-        EditText dateTime2 = (EditText) this.findViewById(R.id.dateTime2);
-        EditText dateTime3 = (EditText) this.findViewById(R.id.dateTime3);
-        //EditText signature = (EditText) this.findViewById(R.id.Signature);
+        TextView status = (TextView) this.findViewById(R.id.status);
+        TextView status2 = (TextView) this.findViewById(R.id.status2);
+        TextView status3 = (TextView) this.findViewById(R.id.status3);
+        TextView event = (TextView) this.findViewById(R.id.event);
+        TextView event2 = (TextView) this.findViewById(R.id.event2);
+        TextView event3 = (TextView) this.findViewById(R.id.event3);
+        TextView dateTime = (TextView) this.findViewById(R.id.dateTime);
+        TextView dateTime2 = (TextView) this.findViewById(R.id.dateTime2);
+        TextView dateTime3 = (TextView) this.findViewById(R.id.dateTime3);
+        //TextView signature = (TextView) this.findViewById(R.id.Signature);
         //ImageView signatureImage = (ImageView) this.findViewById(R.id.signatureView);
         
         status.setEnabled(false); status2.setEnabled(false); status3.setEnabled(false);
@@ -76,13 +77,13 @@ public class TrackingPage extends AppCompatActivity {
     }
     private class getTrackingDetails extends AsyncTask<String, String, String>{
 
-        public String result;
-        EditText status,status2,status3,event,event2,event3,dateTime,dateTime2,dateTime3,signature;
+        String result;
+        TextView status,status2,status3,event,event2,event3,dateTime,dateTime2,dateTime3,signature;
 
         ImageView signatureImage;
 
-        getTrackingDetails(EditText status, EditText status2, EditText status3, EditText event, EditText event2, EditText event3, EditText dateTime,
-                           EditText dateTime2, EditText dateTime3){
+        getTrackingDetails(TextView status, TextView status2, TextView status3, TextView event, TextView event2, TextView event3, TextView dateTime,
+                           TextView dateTime2, TextView dateTime3){
             this.status = status; this.status2 = status2; this.status3=status3;
             this.event = event; this.event2=event2; this.event3=event3;
             this.dateTime = dateTime; this.dateTime2=dateTime2; this.dateTime3=dateTime3;

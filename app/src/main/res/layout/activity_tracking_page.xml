@@ -1,112 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <EditText
+    <TextView
         android:id="@+id/dateTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Date and Time"
+        android:hint="@string/date_and_time"
+        android:textStyle="bold"
         android:inputType="none"
-        android:layout_marginTop="12dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/status"
-        android:layout_alignStart="@+id/status" />
+        android:textSize="20sp"
+        android:textAppearance="@color/colorPrimaryDark"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="200dp"/>
 
-    <EditText
+    <TextView
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="none"
-        android:hint="Status"
-        android:layout_marginRight="13dp"
-        android:layout_marginEnd="13dp"
-        android:layout_marginTop="56dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:hint="@string/status"
+        android:textSize="20sp"
+        android:textAppearance="@color/colorPrimaryDark"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/dateTime"
+        android:layout_alignLeft="@+id/dateTime"
+        android:layout_alignStart="@+id/dateTime" />
 
-    <EditText
+    <TextView
         android:id="@+id/event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="none"
-        android:hint="Event"
+        android:hint="@string/event"
+        android:textSize="20sp"
+        android:textAppearance="@color/colorPrimaryDark"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/status"
         android:layout_alignLeft="@+id/status"
         android:layout_alignStart="@+id/status" />
 
-    <EditText
-    android:id="@+id/dateTime2"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:ems="10"
-    android:hint="Date and Time"
-    android:inputType="none"
-    android:layout_below="@+id/event"
-    android:layout_alignLeft="@+id/event"
-    android:layout_alignStart="@+id/event" />
+    <TextView
+        android:id="@+id/dateTime2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/date_and_time"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textAppearance="@color/colorPrimaryDark"
+        android:inputType="none"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/event"
+        android:layout_alignLeft="@+id/event"
+        android:layout_alignStart="@+id/event" />
 
-    <EditText
+    <TextView
         android:id="@+id/status2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="none"
-        android:hint="Status"
+        android:hint="@string/status"
+        android:textSize="20sp"
+        android:textAppearance="@color/colorPrimaryDark"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/dateTime2"
         android:layout_alignLeft="@+id/dateTime2"
         android:layout_alignStart="@+id/dateTime2"/>
 
-    <EditText
+    <TextView
         android:id="@+id/event2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="none"
-        android:hint="Event"
+        android:hint="@string/event"
+        android:textSize="20sp"
+        android:textAppearance="@color/colorPrimaryDark"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/status2"
         android:layout_alignLeft="@+id/status2"
         android:layout_alignStart="@+id/status2" />
 
-    <EditText
+    <TextView
         android:id="@+id/dateTime3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Date and Time"
+        android:hint="@string/date_and_time"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textAppearance="@color/colorPrimaryDark"
         android:inputType="none"
+        android:layout_marginTop="20dp"
         android:layout_below="@+id/event2"
         android:layout_alignLeft="@+id/event2"
         android:layout_alignStart="@+id/event2" />
 
-    <EditText
+    <TextView
         android:id="@+id/status3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="none"
-        android:hint="Status"
+        android:hint="@string/status"
+        android:textSize="20sp"
+        android:textAppearance="@color/colorPrimaryDark"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/dateTime3"
         android:layout_alignLeft="@+id/dateTime3"
         android:layout_alignStart="@+id/dateTime3"/>
 
-    <EditText
+    <TextView
         android:id="@+id/event3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="none"
-        android:hint="Event"
+        android:hint="@string/event"
+        android:textSize="20sp"
+        android:textAppearance="@color/colorPrimaryDark"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/status3"
         android:layout_alignLeft="@+id/status3"
         android:layout_alignStart="@+id/status3" />
-
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
