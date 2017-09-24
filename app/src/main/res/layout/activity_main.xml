@@ -1,64 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@drawable/dummy_screen"
-    tools:context="com.example.brooke.thewarehousetrackingapp.MainActivity"
-    tools:layout_editor_absoluteY="81dp"
-    tools:layout_editor_absoluteX="0dp">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:weightSum="4"
+    >
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" >
+    </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="0dp"
-        android:layout_height="495dp"
-        android:layout_marginBottom="34dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
-
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
         <Button
             android:id="@+id/deliveredBtn"
-            android:layout_width="126dp"
-            android:layout_height="49dp"
-            android:layout_marginBottom="101dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@android:color/transparent"
-            android:text="@string/delivered_button"
-            app:layout_constraintBottom_toTopOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_above="@+id/inTransitBtn"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:text="@string/delivered_button" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
         <Button
             android:id="@+id/inTransitBtn"
-            android:layout_width="123dp"
-            android:layout_height="49dp"
-            android:layout_marginBottom="69dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@android:color/transparent"
-            android:text="@string/transit_button"
-            android:layout_above="@+id/tbcBtn"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:text="@string/transit_button" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
         <Button
             android:id="@+id/tbcBtn"
-            android:layout_width="118dp"
-            android:layout_height="54dp"
-            android:layout_marginBottom="26dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@android:color/transparent"
-            android:text="@string/tbc_button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:layout_alignParentBottom="true"
-            android:layout_alignRight="@+id/inTransitBtn"
-            android:layout_alignEnd="@+id/inTransitBtn" />
-    </RelativeLayout>
+            android:text="@string/tbc_button" />
+    </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

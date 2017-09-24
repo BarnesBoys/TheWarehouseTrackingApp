@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String trackingNumber = "2809330617685110HAM001DS";
+                String trackingNumber = "MR640187089NZ";
 
                 startActivity(new Intent(MainActivity.this, TrackingPage.class).putExtra("tracking_reference", trackingNumber));
             }
@@ -81,8 +81,7 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    //https://api.vworkapp.com/v4/jobs.xml?api_key=oo9E3tbGBEeEGqqUS2Nk
-    //What we need to implement the api key, but where?
+    //just some more comments
 
     //Todo: create the basic workflow for the main activity assuming already logged in, i.e. onClose(), onCreate() methods.
 
