@@ -63,7 +63,7 @@ public class TrackingPage extends AppCompatActivity {
         EditText dateTime3 = (EditText) this.findViewById(R.id.dateTime3);
         //EditText signature = (EditText) this.findViewById(R.id.Signature);
         //ImageView signatureImage = (ImageView) this.findViewById(R.id.signatureView);
-        
+
         status.setEnabled(false); status2.setEnabled(false); status3.setEnabled(false);
         event.setEnabled(false); event2.setEnabled(false); event3.setEnabled(false);
         dateTime.setEnabled(false); dateTime2.setEnabled(false); dateTime3.setEnabled(false);
