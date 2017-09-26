@@ -3,14 +3,12 @@ package com.example.brooke.thewarehousetrackingapp;
 
 import android.content.Intent;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -23,9 +21,7 @@ import java.util.Map;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 public class TrackingPage extends AppCompatActivity {
 
@@ -50,23 +46,18 @@ public class TrackingPage extends AppCompatActivity {
         //to test tracking number has been set
         //System.err.println("tracking_ref is:  " + trackingNumber);
 
-        Toast.makeText(TrackingPage.this , "Track your Parcel here", Toast.LENGTH_LONG).show();
-
-        EditText status = (EditText) this.findViewById(R.id.status);
-        EditText status2 = (EditText) this.findViewById(R.id.status2);
-        EditText status3 = (EditText) this.findViewById(R.id.status3);
-        EditText event = (EditText) this.findViewById(R.id.event);
-        EditText event2 = (EditText) this.findViewById(R.id.event2);
-        EditText event3 = (EditText) this.findViewById(R.id.event3);
-        EditText dateTime = (EditText) this.findViewById(R.id.dateTime);
-        EditText dateTime2 = (EditText) this.findViewById(R.id.dateTime2);
-        EditText dateTime3 = (EditText) this.findViewById(R.id.dateTime3);
-        //EditText signature = (EditText) this.findViewById(R.id.Signature);
+        TextView status = (TextView) this.findViewById(R.id.status);
+        TextView status2 = (TextView) this.findViewById(R.id.status2);
+        TextView status3 = (TextView) this.findViewById(R.id.status3);
+        TextView event = (TextView) this.findViewById(R.id.event);
+        TextView event2 = (TextView) this.findViewById(R.id.event2);
+        TextView event3 = (TextView) this.findViewById(R.id.event3);
+        TextView dateTime = (TextView) this.findViewById(R.id.dateTime);
+        TextView dateTime2 = (TextView) this.findViewById(R.id.dateTime2);
+        TextView dateTime3 = (TextView) this.findViewById(R.id.dateTime3);
+        //TextView signature = (TextView) this.findViewById(R.id.Signature);
         //ImageView signatureImage = (ImageView) this.findViewById(R.id.signatureView);
 
-        status.setEnabled(false); status2.setEnabled(false); status3.setEnabled(false);
-        event.setEnabled(false); event2.setEnabled(false); event3.setEnabled(false);
-        dateTime.setEnabled(false); dateTime2.setEnabled(false); dateTime3.setEnabled(false);
         //signature.setEnabled(false);
         //signatureImage.setEnabled(false);
 
@@ -76,13 +67,13 @@ public class TrackingPage extends AppCompatActivity {
     }
     private class getTrackingDetails extends AsyncTask<String, String, String>{
 
-        public String result;
-        EditText status,status2,status3,event,event2,event3,dateTime,dateTime2,dateTime3,signature;
+        String result = "";
+        TextView status,status2,status3,event,event2,event3,dateTime,dateTime2,dateTime3,signature;
 
-        ImageView signatureImage;
+        //ImageView signatureImage;
 
-        getTrackingDetails(EditText status, EditText status2, EditText status3, EditText event, EditText event2, EditText event3, EditText dateTime,
-                           EditText dateTime2, EditText dateTime3){
+        getTrackingDetails(TextView status, TextView status2, TextView status3, TextView event, TextView event2, TextView event3, TextView dateTime,
+                           TextView dateTime2, TextView dateTime3){
             this.status = status; this.status2 = status2; this.status3=status3;
             this.event = event; this.event2=event2; this.event3=event3;
             this.dateTime = dateTime; this.dateTime2=dateTime2; this.dateTime3=dateTime3;
@@ -166,35 +157,35 @@ public class TrackingPage extends AppCompatActivity {
                 //parsing the returned data
                 obj = new JSONObject(responseMessage);
                 JSONArray trackingEvents = obj.getJSONObject("results").getJSONArray("tracking_events") ;
-                JSONObject pickedUpEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 4);
-                JSONObject transitEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 2);
-                JSONObject lastEvent  = (JSONObject) trackingEvents.get(trackingEvents.length() - 1);
+                //
+                if(trackingEvents.length() == 2){
+                    System.out.println("tracking events length "+trackingEvents.length());
+                    JSONObject pickedUpEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 1);
+                    getPickedUpEvent(pickedUpEvent);
+
+                }
+                //
+                if(trackingEvents.length() == 3) {
+                    System.out.println("tracking events length "+trackingEvents.length());
+                    JSONObject pickedUpEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 2);
+                    getPickedUpEvent(pickedUpEvent);
+                    JSONObject transitEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 1);
+                    getTransitEvent(transitEvent);
+                }
+                //
+                if(trackingEvents.length() == 4) {
+                    System.out.println("tracking events length "+trackingEvents.length()+" "+trackingEvents);
+                    JSONObject pickedUpEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 3);
+                    getPickedUpEvent(pickedUpEvent);
+                    JSONObject transitEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 2);
+                    getTransitEvent(transitEvent);
+                    JSONObject deliveredEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 1);
+                    getDeliveredEvent(deliveredEvent);
+                }
 
                 //JSONObject eventsTest = (JSONObject) trackingEvents.get(trackingEvents.length());
 
-                //extracting the results from tracking events to display
-                String resultPickedUpEvent = pickedUpEvent.getString("event_description");
-                String resultPickedUpStatus = pickedUpEvent.getString("status_description");
-                String resultPickedUpDateTime = pickedUpEvent.getString("event_datetime");
-                String resultTransitEvent = transitEvent.getString("event_description");
-                String resultTransitStatus = transitEvent.getString("status_description");
-                String resultTransitDateTime = transitEvent.getString("event_datetime");
-                String resultEvent = lastEvent.getString("event_description");
-                String resultStatus = lastEvent.getString("status_description");
-                String resultDateTime = lastEvent.getString("event_datetime");
                 //String resultSignature = lastEvent.getString("signed_by");
-
-                System.err.println(trackingEvents);
-                System.err.println(resultEvent);
-                System.err.println(resultStatus);
-                System.err.println(resultDateTime);
-                //System.err.println(resultSignature);
-                System.err.println(pickedUpEvent);
-                System.err.println(transitEvent);
-
-                result = resultPickedUpStatus + "///" + resultPickedUpEvent + "///" + resultPickedUpDateTime + "///" +
-                        resultTransitStatus + "///" + resultTransitEvent + "///" + resultTransitDateTime + "///" +
-                        resultStatus + "///" + resultEvent + "///" + resultDateTime;
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -203,13 +194,76 @@ public class TrackingPage extends AppCompatActivity {
             return result;
         }
 
+        //---------------------------------------------------------------------
+        //Methods for extracting the results from tracking events to display
+        //---------------------------------------------------------------------
+        void getPickedUpEvent(JSONObject pickedUpEvent){
+            try {
+                String resultPickedUpEvent = pickedUpEvent.getString("event_description");
+                String resultPickedUpStatus = pickedUpEvent.getString("status_description");
+                String resultPickedUpDateTime = pickedUpEvent.getString("event_datetime");
+                result += resultPickedUpStatus + "///" + resultPickedUpEvent + "///" + resultPickedUpDateTime + "///";
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        void getTransitEvent(JSONObject transitEvent){
+            try {
+                String resultTransitEvent = transitEvent.getString("event_description");
+                String resultTransitStatus = transitEvent.getString("status_description");
+                String resultTransitDateTime = transitEvent.getString("event_datetime");
+                result += resultTransitStatus + "///" + resultTransitEvent + "///" + resultTransitDateTime + "///";
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        void getDeliveredEvent(JSONObject deliveredEvent){
+            try {
+                String resultDeliveredEvent = deliveredEvent.getString("event_description");
+                String resultDeliveredStatus = deliveredEvent.getString("status_description");
+                String resultDeliveredDateTime = deliveredEvent.getString("event_datetime");
+                result += resultDeliveredEvent + "///" + resultDeliveredStatus + "///" + resultDeliveredDateTime;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        //On post execute method
         protected void onPostExecute(String st){
 
             String[] result = st.split("///");
-            String[] pickedUpDateTime = result[2].split("T");
-            String[] transitDateTime = result[5].split("T");
-            String[] resultDateTime = result[8].split("T");
+            //
+            if(result.length == 3) {
+                String[] pickedUpDateTime = result[2].split("T");
+                dateTime.setText(pickedUpDateTime[0] + " " + pickedUpDateTime[1]);
+                status.setText(result[0]);
+                event.setText(result[1]);
+            }
+            //
+            if(result.length == 6) {
+                String[] transitDateTime = result[2].split("T");
+                String[] resultDateTime2 = result[5].split("T");
+                dateTime.setText(transitDateTime[0] + " " + transitDateTime[1]);
+                dateTime2.setText(resultDateTime2[0] + " " + resultDateTime2[1]);
+                status.setText(result[0]); status2.setText(result[3]);
+                event.setText(result[1]); event2.setText(result[4]);
+            }
+            //
+            if(result.length == 9) {
+                String[] resultDateTime = result[2].split("T");
+                String[] resultDateTime2 = result[5].split("T");
+                String[] resultDateTime3 = result[8].split("T");
+                dateTime.setText(resultDateTime[0] + " " + resultDateTime[1]);
+                dateTime2.setText(resultDateTime2[0] + " " + resultDateTime2[1]);
+                dateTime3.setText(resultDateTime3[0] + " " + resultDateTime3[1]);
+                status.setText(result[0]); status2.setText(result[3]); status3.setText(result[6]);
+                event.setText(result[1]); event2.setText(result[4]); event3.setText(result[7]);
+            }
             //String[] signatureSplit = result[3].split(":");
+            //signature.setText(signatureSplit[1]);
+
 
             // ------Trying to convert binary data to image----------
             // int sigLength = signatureSplit[2].length();
@@ -219,16 +273,6 @@ public class TrackingPage extends AppCompatActivity {
             //-------convert to bitmap? or buffered image? or?-------
             //Bitmap image = BitmapFactory.decodeFile(sigSplit2);
             //signatureImage.setImageBitmap(image);
-
-
-            status.setText(result[0]); status2.setText(result[3]); status3.setText(result[6]);
-            event.setText(result[1]); event2.setText(result[4]); event3.setText(result[7]);
-            dateTime.setText(pickedUpDateTime[0] + " " + pickedUpDateTime[1]);
-            dateTime2.setText(resultDateTime[0] + " " + resultDateTime[1]);
-            dateTime3.setText(resultDateTime[0] + " " + resultDateTime[1]);
-            //signature.setText(signatureSplit[1]);
-
-
         }
     }
 

@@ -6,5 +6,13 @@
     <string name="delivered_button">Delivered</string>
     <string name="transit_button">In Transit</string>
     <string name="tbc_button">TBC</string>
+    <string name="date_and_time">Date and Time</string>
+    <string name="status">Status</string>
+    <string name="event">Event</string>
+    <string name="not_yet_delivered">Not Yet Delivered</string>
+    <string name="not_in_transit">Not In Transit</string>
+    <string name="not_yet_in_transit">Not Yet In Transit</string>
+    <string name="not_yet_picked_up">Not Yet Picked Up</string>
+    <string name="not_yet_processed">Not Yet Processed</string>
 
 </resources>
