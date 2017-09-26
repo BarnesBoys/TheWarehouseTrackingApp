@@ -4,8 +4,9 @@ package com.example.brooke.thewarehousetrackingapp;
 import android.content.Intent;
 
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.*;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,8 +21,6 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
-
-import android.widget.TextView;
 
 public class TrackingPage extends AppCompatActivity {
 
