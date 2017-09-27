@@ -3,9 +3,11 @@ package com.example.brooke.thewarehousetrackingapp;
 
 import android.content.Intent;
 
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v7.app.*;
 import android.os.Bundle;
+import android.text.Html;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -45,15 +47,15 @@ public class TrackingPage extends AppCompatActivity {
         //to test tracking number has been set
         //System.err.println("tracking_ref is:  " + trackingNumber);
 
-        TextView status = (TextView) this.findViewById(R.id.status);
+        /**TextView status = (TextView) this.findViewById(R.id.status);
         TextView status2 = (TextView) this.findViewById(R.id.status2);
         TextView status3 = (TextView) this.findViewById(R.id.status3);
         TextView event = (TextView) this.findViewById(R.id.event);
         TextView event2 = (TextView) this.findViewById(R.id.event2);
-        TextView event3 = (TextView) this.findViewById(R.id.event3);
-        TextView dateTime = (TextView) this.findViewById(R.id.dateTime);
-        TextView dateTime2 = (TextView) this.findViewById(R.id.dateTime2);
-        TextView dateTime3 = (TextView) this.findViewById(R.id.dateTime3);
+        TextView event3 = (TextView) this.findViewById(R.id.event3);**/
+        TextView procStatus = (TextView) this.findViewById(R.id.processed_status);
+        TextView transitStatus = (TextView) this.findViewById(R.id.transit_status);
+        TextView deliveredStatus = (TextView) this.findViewById(R.id.delivered_status);
         //TextView signature = (TextView) this.findViewById(R.id.Signature);
         //ImageView signatureImage = (ImageView) this.findViewById(R.id.signatureView);
 
@@ -61,21 +63,25 @@ public class TrackingPage extends AppCompatActivity {
         //signatureImage.setEnabled(false);
 
 
-        new getTrackingDetails(status, status2, status3, event, event2, event3, dateTime, dateTime2, dateTime3).execute();
+        //new getTrackingDetails(status, status2, status3, event, event2, event3, dateTime, dateTime2, dateTime3).execute();
+        new getTrackingDetails(procStatus, transitStatus, deliveredStatus).execute();
 
     }
     private class getTrackingDetails extends AsyncTask<String, String, String>{
 
         String result = "";
-        TextView status,status2,status3,event,event2,event3,dateTime,dateTime2,dateTime3,signature;
+        //TextView status,status2,status3,event,event2,event3,dateTime,dateTime2,dateTime3,signature;
+        TextView procStatus, transitStatus,deliverdStatus;
 
         //ImageView signatureImage;
 
-        getTrackingDetails(TextView status, TextView status2, TextView status3, TextView event, TextView event2, TextView event3, TextView dateTime,
-                           TextView dateTime2, TextView dateTime3){
-            this.status = status; this.status2 = status2; this.status3=status3;
-            this.event = event; this.event2=event2; this.event3=event3;
-            this.dateTime = dateTime; this.dateTime2=dateTime2; this.dateTime3=dateTime3;
+        //getTrackingDetails(TextView status, TextView status2, TextView status3, TextView event, TextView event2, TextView event3, TextView dateTime,
+          //                 TextView dateTime2, TextView dateTime3){
+            getTrackingDetails(TextView procStatus,
+                           TextView transitStatus, TextView deliverdStatus){
+            //this.status = status; this.status2 = status2; this.status3=status3;
+            //this.event = event; this.event2=event2; this.event3=event3;
+            this.procStatus = procStatus; this.transitStatus=transitStatus; this.deliverdStatus=deliverdStatus;
         }
 
         protected String doInBackground(String... params){
@@ -94,7 +100,7 @@ public class TrackingPage extends AppCompatActivity {
                 conn.setRequestMethod("POST");
                 conn.setDoInput(true);
 
-                //transfer the authoriztion details as needed
+                //transfer the authorization details as needed
                 DataOutputStream out = new DataOutputStream(conn.getOutputStream());
                 out.writeBytes("grant_type=client_credentials&client_id=ccc7bf438e5f440dba9b0194b75a9fca&client_secret=dD021693C7f0410AbdAb48E63fD884c3");
                 out.flush();
@@ -145,7 +151,7 @@ public class TrackingPage extends AppCompatActivity {
                     System.err.println(entry.getKey() + " : " + entry.getValue());
                 }
 
-                //return the actuall json data or the error json data
+                //return the actual json data or the error json data
                 if(responseCode != 200) in = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
                 else in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
@@ -236,29 +242,32 @@ public class TrackingPage extends AppCompatActivity {
             //
             if(result.length == 3) {
                 String[] pickedUpDateTime = result[2].split("T");
-                dateTime.setText(pickedUpDateTime[0] + " " + pickedUpDateTime[1]);
-                status.setText(result[0]);
-                event.setText(result[1]);
+                procStatus.setText(pickedUpDateTime[0] + " " + pickedUpDateTime[1] + "\n" + result[1]);
+                //status.setText(result[0]);
+                //event.setText(result[1]);
             }
             //
             if(result.length == 6) {
                 String[] transitDateTime = result[2].split("T");
                 String[] resultDateTime2 = result[5].split("T");
-                dateTime.setText(transitDateTime[0] + " " + transitDateTime[1]);
-                dateTime2.setText(resultDateTime2[0] + " " + resultDateTime2[1]);
-                status.setText(result[0]); status2.setText(result[3]);
-                event.setText(result[1]); event2.setText(result[4]);
+                procStatus.setText(transitDateTime[0] + " " + transitDateTime[1] + "\n" + result[1]);
+                transitStatus.setText(resultDateTime2[0] + " " + resultDateTime2[1] + "\n" + result[4]);
+                //status.setText(result[0]); status2.setText(result[3]);
+                //event.setText(result[1]); event2.setText(result[4]);
             }
             //
             if(result.length == 9) {
-                String[] resultDateTime = result[2].split("T");
-                String[] resultDateTime2 = result[5].split("T");
-                String[] resultDateTime3 = result[8].split("T");
-                dateTime.setText(resultDateTime[0] + " " + resultDateTime[1]);
-                dateTime2.setText(resultDateTime2[0] + " " + resultDateTime2[1]);
+                String[] dateTimeProcessed = result[2].split("T");
+                String[] dateTimeTransit = result[5].split("T");
+                String[] dateTimeDelivered = result[8].split("T");
+                procStatus.setText(dateTimeProcessed[0] + " " + dateTimeProcessed[1] + "\n" + result[1]);
+                transitStatus.setText(dateTimeTransit[0] + " " + dateTimeTransit[1] + "\n" + result[4]);
+                deliverdStatus.setText(dateTimeDelivered[0] + " " + dateTimeDelivered[1] + "\n" + result[6]);
+                /**dateTime2.setText(resultDateTime2[0] + " " + resultDateTime2[1]);
                 dateTime3.setText(resultDateTime3[0] + " " + resultDateTime3[1]);
-                status.setText(result[0]); status2.setText(result[3]); status3.setText(result[6]);
-                event.setText(result[1]); event2.setText(result[4]); event3.setText(result[7]);
+                status.setText(result[0]); event.setText(result[1]);
+                status2.setText(result[3]); event2.setText(result[4]);
+                status3.setText(result[6]); event3.setText(result[7]);**/
             }
             //String[] signatureSplit = result[3].split(":");
             //signature.setText(signatureSplit[1]);
