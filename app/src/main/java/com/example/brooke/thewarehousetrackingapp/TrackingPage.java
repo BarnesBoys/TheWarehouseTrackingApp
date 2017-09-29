@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.*;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,10 +30,15 @@ public class TrackingPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracking_page);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setContentView(R.layout.activity_tracking_page);
+
         Intent intent = getIntent();
-
-        //System.err.println("intent: " + intent);
-
         if(intent == null) {
             trackingNumber = "";
         }
@@ -45,6 +51,7 @@ public class TrackingPage extends AppCompatActivity {
         //to test tracking number has been set
         //System.err.println("tracking_ref is:  " + trackingNumber);
 
+        //Establish textviews
         TextView status = (TextView) this.findViewById(R.id.status);
         TextView status2 = (TextView) this.findViewById(R.id.status2);
         TextView status3 = (TextView) this.findViewById(R.id.status3);
@@ -54,16 +61,18 @@ public class TrackingPage extends AppCompatActivity {
         TextView dateTime = (TextView) this.findViewById(R.id.dateTime);
         TextView dateTime2 = (TextView) this.findViewById(R.id.dateTime2);
         TextView dateTime3 = (TextView) this.findViewById(R.id.dateTime3);
+
         //TextView signature = (TextView) this.findViewById(R.id.Signature);
         //ImageView signatureImage = (ImageView) this.findViewById(R.id.signatureView);
 
         //signature.setEnabled(false);
         //signatureImage.setEnabled(false);
 
-
+        //send textviews to getTrackingDetails class
         new getTrackingDetails(status, status2, status3, event, event2, event3, dateTime, dateTime2, dateTime3).execute();
 
     }
+
     private class getTrackingDetails extends AsyncTask<String, String, String>{
 
         String result = "";
@@ -71,6 +80,7 @@ public class TrackingPage extends AppCompatActivity {
 
         //ImageView signatureImage;
 
+        //class constructor
         getTrackingDetails(TextView status, TextView status2, TextView status3, TextView event, TextView event2, TextView event3, TextView dateTime,
                            TextView dateTime2, TextView dateTime3){
             this.status = status; this.status2 = status2; this.status3=status3;
@@ -81,6 +91,7 @@ public class TrackingPage extends AppCompatActivity {
         protected String doInBackground(String... params){
 
             try {
+                //establish connection nzpost
                 URL url = new URL("https://oauth.nzpost.co.nz/as/token.oauth2");
                 HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 
@@ -94,7 +105,7 @@ public class TrackingPage extends AppCompatActivity {
                 conn.setRequestMethod("POST");
                 conn.setDoInput(true);
 
-                //transfer the authoriztion details as needed
+                //transfer the authorization details as needed
                 DataOutputStream out = new DataOutputStream(conn.getOutputStream());
                 out.writeBytes("grant_type=client_credentials&client_id=ccc7bf438e5f440dba9b0194b75a9fca&client_secret=dD021693C7f0410AbdAb48E63fD884c3");
                 out.flush();
@@ -145,7 +156,7 @@ public class TrackingPage extends AppCompatActivity {
                     System.err.println(entry.getKey() + " : " + entry.getValue());
                 }
 
-                //return the actuall json data or the error json data
+                //return the actual json data or the error json data
                 if(responseCode != 200) in = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
                 else in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
@@ -156,14 +167,15 @@ public class TrackingPage extends AppCompatActivity {
                 //parsing the returned data
                 obj = new JSONObject(responseMessage);
                 JSONArray trackingEvents = obj.getJSONObject("results").getJSONArray("tracking_events") ;
-                //
+
+                //establish the different states of parcel, parcel is picked up
                 if(trackingEvents.length() == 2){
                     System.out.println("tracking events length "+trackingEvents.length());
                     JSONObject pickedUpEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 1);
                     getPickedUpEvent(pickedUpEvent);
 
                 }
-                //
+                //parcel is in transit
                 if(trackingEvents.length() == 3) {
                     System.out.println("tracking events length "+trackingEvents.length());
                     JSONObject pickedUpEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 2);
@@ -171,7 +183,7 @@ public class TrackingPage extends AppCompatActivity {
                     JSONObject transitEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 1);
                     getTransitEvent(transitEvent);
                 }
-                //
+                //parcel is delivered
                 if(trackingEvents.length() == 4) {
                     System.out.println("tracking events length "+trackingEvents.length()+" "+trackingEvents);
                     JSONObject pickedUpEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 3);
@@ -196,6 +208,8 @@ public class TrackingPage extends AppCompatActivity {
         //---------------------------------------------------------------------
         //Methods for extracting the results from tracking events to display
         //---------------------------------------------------------------------
+
+        //use jason to get info about transit status
         void getPickedUpEvent(JSONObject pickedUpEvent){
             try {
                 String resultPickedUpEvent = pickedUpEvent.getString("event_description");
@@ -207,6 +221,7 @@ public class TrackingPage extends AppCompatActivity {
             }
         }
 
+        //use jason to get info about transit status
         void getTransitEvent(JSONObject transitEvent){
             try {
                 String resultTransitEvent = transitEvent.getString("event_description");
@@ -218,6 +233,7 @@ public class TrackingPage extends AppCompatActivity {
             }
         }
 
+        //use jason to get info about delivered status
         void getDeliveredEvent(JSONObject deliveredEvent){
             try {
                 String resultDeliveredEvent = deliveredEvent.getString("event_description");
