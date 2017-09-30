@@ -36,7 +36,6 @@ public class TrackingPage extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        setContentView(R.layout.activity_tracking_page);
 
         Intent intent = getIntent();
         if(intent == null) {
