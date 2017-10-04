@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d("CustomFirebaseMsg", "Message here");
     }
 
     @Override
@@ -80,12 +82,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
-
-    //just some more comments
-
-    //Todo: create the basic workflow for the main activity assuming already logged in, i.e. onClose(), onCreate() methods.
-
-    //Todo: West - Firebase Push notifications logic
 
 
 }
