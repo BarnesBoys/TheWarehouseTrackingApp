@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.*;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.util.Log;
 
@@ -26,6 +27,8 @@ import javax.net.ssl.SSLContext;
 public class TrackingPage extends AppCompatActivity {
 
     protected String trackingNumber = null;
+    ImageView image;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +73,7 @@ public class TrackingPage extends AppCompatActivity {
         //send textviews to getTrackingDetails class
         new getTrackingDetails(status, status2, status3, event, event2, event3, dateTime, dateTime2, dateTime3).execute();
 
+        //image = (ImageView) findViewById(R.id.imageView1);
     }
 
     private class getTrackingDetails extends AsyncTask<String, String, String>{
