@@ -1,5 +1,8 @@
 package com.example.brooke.thewarehousetrackingapp;
 
+import android.app.Notification;
+import android.support.v4.app.NotificationManagerCompat;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -29,6 +32,14 @@ public class NotificationService extends FirebaseMessagingService {
             Log.d(TAG, message);
             System.out.println(message);
         }
+
+        Notification notification = new NotificationCompat.Builder(this)
+                .setContentTitle(remoteMessage.getNotification().getTitle())
+                .setContentText(remoteMessage.getNotification().getBody())
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .build();
+        NotificationManagerCompat manager = NotificationManagerCompat.from(getApplicationContext());
+        manager.notify(123, notification);
 
     }
 }
