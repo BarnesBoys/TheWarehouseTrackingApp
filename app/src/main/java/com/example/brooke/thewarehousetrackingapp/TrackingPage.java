@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.*;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.util.Log;
@@ -27,7 +28,8 @@ import javax.net.ssl.SSLContext;
 public class TrackingPage extends AppCompatActivity {
 
     protected String trackingNumber = null;
-    ImageView image;
+    boolean tick1,tick2,tick3 = false;
+    ImageView image1, image2, image3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +43,11 @@ public class TrackingPage extends AppCompatActivity {
         super.onResume();
 
         Intent intent = getIntent();
-        if(intent == null) {
+        if (intent == null) {
             trackingNumber = "";
-        }
-        else{
+        } else {
             Bundle extras = intent.getExtras();
-            if(extras == null) trackingNumber = "";
+            if (extras == null) trackingNumber = "";
             else trackingNumber = intent.getExtras().getString("tracking_reference");
         }
 
@@ -64,6 +65,10 @@ public class TrackingPage extends AppCompatActivity {
         TextView dateTime2 = (TextView) this.findViewById(R.id.dateTime2);
         TextView dateTime3 = (TextView) this.findViewById(R.id.dateTime3);
 
+        image1 = (ImageView) findViewById(R.id.imageView1);
+        image2 = (ImageView) findViewById(R.id.imageView2);
+        image3 = (ImageView) findViewById(R.id.imageView3);
+
         //TextView signature = (TextView) this.findViewById(R.id.Signature);
         //ImageView signatureImage = (ImageView) this.findViewById(R.id.signatureView);
 
@@ -73,7 +78,22 @@ public class TrackingPage extends AppCompatActivity {
         //send textviews to getTrackingDetails class
         new getTrackingDetails(status, status2, status3, event, event2, event3, dateTime, dateTime2, dateTime3).execute();
 
-        //image = (ImageView) findViewById(R.id.imageView1);
+        //This small delay is so the images update correctly
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //If stages have been complete put a tick on screen
+        if (tick1) {
+            image1.setImageResource(R.drawable.tick);
+        }
+        if (tick2) {
+            image2.setImageResource(R.drawable.tick);
+        }
+        if (tick3) {
+            image3.setImageResource(R.drawable.tick);
+        }
     }
 
     private class getTrackingDetails extends AsyncTask<String, String, String>{
@@ -176,7 +196,7 @@ public class TrackingPage extends AppCompatActivity {
                     System.out.println("tracking events length "+trackingEvents.length());
                     JSONObject pickedUpEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 1);
                     getPickedUpEvent(pickedUpEvent);
-
+                    tick1 = true;
                 }
                 //parcel is in transit
                 if(trackingEvents.length() == 3) {
@@ -185,6 +205,7 @@ public class TrackingPage extends AppCompatActivity {
                     getPickedUpEvent(pickedUpEvent);
                     JSONObject transitEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 1);
                     getTransitEvent(transitEvent);
+                    tick1 = true; tick2 = true;
                 }
                 //parcel is delivered
                 if(trackingEvents.length() == 4) {
@@ -195,6 +216,7 @@ public class TrackingPage extends AppCompatActivity {
                     getTransitEvent(transitEvent);
                     JSONObject deliveredEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 1);
                     getDeliveredEvent(deliveredEvent);
+                    tick1 = true; tick2 = true; tick3 = true;
                 }
 
                 //JSONObject eventsTest = (JSONObject) trackingEvents.get(trackingEvents.length());
@@ -292,6 +314,16 @@ public class TrackingPage extends AppCompatActivity {
             //Bitmap image = BitmapFactory.decodeFile(sigSplit2);
             //signatureImage.setImageBitmap(image);
         }
+
+        /*boolean getTickStatus1() {
+            return tick1;
+        }
+        boolean getTickStatus2() {
+            return tick2;
+        }
+        boolean getTickStatus3() {
+            return tick3;
+        }*/
     }
 
 }
