@@ -28,7 +28,12 @@ import javax.net.ssl.SSLContext;
 public class TrackingPage extends AppCompatActivity {
 
     protected String trackingNumber = null;
-    boolean tick1,tick2,tick3 = false;
+    //todo: changing variables
+    //boolean tick1,tick2,tick3 = false;
+    TickBool tick1 = new TickBool();
+    TickBool tick2 = new TickBool();
+    TickBool tick3 = new TickBool();
+
     ImageView image1, image2, image3;
 
     @Override
@@ -75,25 +80,33 @@ public class TrackingPage extends AppCompatActivity {
         //signature.setEnabled(false);
         //signatureImage.setEnabled(false);
 
+        tick1.setListener(new TickBool.ChangeListener() {
+            @Override
+            public void onChange() {
+                if(tick1.getBool())
+                    image1.setImageResource(R.drawable.tick);
+            }
+        });
+
+        tick2.setListener(new TickBool.ChangeListener() {
+            @Override
+            public void onChange() {
+                if(tick2.getBool())
+                    image2.setImageResource(R.drawable.tick);
+            }
+        });
+
+        tick3.setListener(new TickBool.ChangeListener() {
+            @Override
+            public void onChange() {
+                if(tick3.getBool())
+                    image3.setImageResource(R.drawable.tick);
+            }
+        });
+
         //send textviews to getTrackingDetails class
         new getTrackingDetails(status, status2, status3, event, event2, event3, dateTime, dateTime2, dateTime3).execute();
 
-        //This small delay is so the images update correctly
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        //If stages have been complete put a tick on screen
-        if (tick1) {
-            image1.setImageResource(R.drawable.tick);
-        }
-        if (tick2) {
-            image2.setImageResource(R.drawable.tick);
-        }
-        if (tick3) {
-            image3.setImageResource(R.drawable.tick);
-        }
     }
 
     private class getTrackingDetails extends AsyncTask<String, String, String>{
@@ -196,7 +209,8 @@ public class TrackingPage extends AppCompatActivity {
                     System.out.println("tracking events length "+trackingEvents.length());
                     JSONObject pickedUpEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 1);
                     getPickedUpEvent(pickedUpEvent);
-                    tick1 = true;
+                    //todo: changed value here
+                    tick1.setBool(true);
                 }
                 //parcel is in transit
                 if(trackingEvents.length() == 3) {
@@ -205,7 +219,9 @@ public class TrackingPage extends AppCompatActivity {
                     getPickedUpEvent(pickedUpEvent);
                     JSONObject transitEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 1);
                     getTransitEvent(transitEvent);
-                    tick1 = true; tick2 = true;
+                    //todo: changed value here
+                    tick1.setBool(true);
+                    tick2.setBool(true);
                 }
                 //parcel is delivered
                 if(trackingEvents.length() == 4) {
@@ -216,7 +232,10 @@ public class TrackingPage extends AppCompatActivity {
                     getTransitEvent(transitEvent);
                     JSONObject deliveredEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 1);
                     getDeliveredEvent(deliveredEvent);
-                    tick1 = true; tick2 = true; tick3 = true;
+                    //todo: changed value here
+                    tick1.setBool(true);
+                    tick2.setBool(true);
+                    tick3.setBool(true);
                 }
 
                 //JSONObject eventsTest = (JSONObject) trackingEvents.get(trackingEvents.length());
@@ -301,29 +320,8 @@ public class TrackingPage extends AppCompatActivity {
                 status.setText(result[0]); status2.setText(result[3]); status3.setText(result[6]);
                 event.setText(result[1]); event2.setText(result[4]); event3.setText(result[7]);
             }
-            //String[] signatureSplit = result[3].split(":");
-            //signature.setText(signatureSplit[1]);
 
-
-            // ------Trying to convert binary data to image----------
-            // int sigLength = signatureSplit[2].length();
-            //-------gets binary data out of signed_by event---------
-            //String sigSplit2 = signatureSplit[2].substring(2, sigLength-2);
-            //System.out.println(sigSplit2);
-            //-------convert to bitmap? or buffered image? or?-------
-            //Bitmap image = BitmapFactory.decodeFile(sigSplit2);
-            //signatureImage.setImageBitmap(image);
         }
-
-        /*boolean getTickStatus1() {
-            return tick1;
-        }
-        boolean getTickStatus2() {
-            return tick2;
-        }
-        boolean getTickStatus3() {
-            return tick3;
-        }*/
     }
 
 }
