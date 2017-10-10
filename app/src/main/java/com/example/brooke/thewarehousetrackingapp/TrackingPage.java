@@ -80,7 +80,7 @@ public class TrackingPage extends AppCompatActivity {
 
         //This small delay is so the images update correctly
         try {
-            Thread.sleep(1000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
