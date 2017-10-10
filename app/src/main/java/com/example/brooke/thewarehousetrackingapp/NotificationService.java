@@ -1,6 +1,11 @@
 package com.example.brooke.thewarehousetrackingapp;
 
 import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
@@ -33,13 +38,31 @@ public class NotificationService extends FirebaseMessagingService {
             System.out.println(message);
         }
 
-        Notification notification = new NotificationCompat.Builder(this)
-                .setContentTitle(remoteMessage.getNotification().getTitle())
-                .setContentText(remoteMessage.getNotification().getBody())
-                .setSmallIcon(R.mipmap.ic_launcher)
+
+        NotificationCompat.Builder notification =
+                new NotificationCompat.Builder(this);
+        //set up the notification
+        /*Notification notification = new NotificationCompat.Builder(this)
+
                 .build();
-        NotificationManagerCompat manager = NotificationManagerCompat.from(getApplicationContext());
-        manager.notify(123, notification);
+                */
+        //hard coded intent, to be extracted from info later
+        Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        //set the activity
+        notification.setContentIntent(pendingIntent);
+
+        //build the notification with the incoming data
+        notification.setContentTitle(remoteMessage.getNotification().getTitle());
+        notification.setContentText(remoteMessage.getNotification().getBody());
+        notification.setSmallIcon(R.mipmap.ic_launcher);
+
+        //Get an instance of the Notifications Manager
+        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.notify(123, notification.build());
+
+        //NotificationManagerCompat manager = NotificationManagerCompat.from(getApplicationContext());
+        //manager.notify(001, notification);
 
     }
 }
