@@ -28,7 +28,6 @@ import javax.net.ssl.SSLContext;
 public class TrackingPage extends AppCompatActivity {
 
     protected String trackingNumber = null;
-    //todo: changing variables
     //boolean tick1,tick2,tick3 = false;
     TickBool tick1 = new TickBool();
     TickBool tick2 = new TickBool();
@@ -209,7 +208,6 @@ public class TrackingPage extends AppCompatActivity {
                     System.out.println("tracking events length "+trackingEvents.length());
                     JSONObject pickedUpEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 1);
                     getPickedUpEvent(pickedUpEvent);
-                    //todo: changed value here
                     tick1.setBool(true);
                 }
                 //parcel is in transit
@@ -219,7 +217,6 @@ public class TrackingPage extends AppCompatActivity {
                     getPickedUpEvent(pickedUpEvent);
                     JSONObject transitEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 1);
                     getTransitEvent(transitEvent);
-                    //todo: changed value here
                     tick1.setBool(true);
                     tick2.setBool(true);
                 }
@@ -232,7 +229,6 @@ public class TrackingPage extends AppCompatActivity {
                     getTransitEvent(transitEvent);
                     JSONObject deliveredEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 1);
                     getDeliveredEvent(deliveredEvent);
-                    //todo: changed value here
                     tick1.setBool(true);
                     tick2.setBool(true);
                     tick3.setBool(true);
