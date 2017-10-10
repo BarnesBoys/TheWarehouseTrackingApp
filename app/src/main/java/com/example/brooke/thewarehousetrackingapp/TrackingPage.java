@@ -6,11 +6,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.*;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -70,11 +68,6 @@ public class TrackingPage extends AppCompatActivity {
         image2 = (ImageView) findViewById(R.id.imageView2);
         image3 = (ImageView) findViewById(R.id.imageView3);
 
-        //TextView signature = (TextView) this.findViewById(R.id.Signature);
-        //ImageView signatureImage = (ImageView) this.findViewById(R.id.signatureView);
-
-        //signature.setEnabled(false);
-        //signatureImage.setEnabled(false);
 
         //send textviews to getTrackingDetails class
         new getTrackingDetails(status, status2, status3, event, event2, event3, dateTime, dateTime2, dateTime3).execute();
@@ -227,10 +220,6 @@ public class TrackingPage extends AppCompatActivity {
                     tick1 = true; tick2 = true; tick3 = true;
                 }
 
-                //JSONObject eventsTest = (JSONObject) trackingEvents.get(trackingEvents.length());
-
-                //String resultSignature = lastEvent.getString("signed_by");
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -309,31 +298,8 @@ public class TrackingPage extends AppCompatActivity {
                 status3.setText(result[0]); status2.setText(result[3]); status.setText(result[7]); status2.setVisibility(View.VISIBLE); status3.setVisibility(View.VISIBLE);
                 event3.setText(result[1]); event2.setText(result[4]); event.setText(result[6]); event2.setVisibility(View.VISIBLE); event3.setVisibility(View.VISIBLE);
             }
-            //String[] signatureSplit = result[3].split(":");
-            //signature.setText(signatureSplit[1]);
-
-
-            // ------Trying to convert binary data to image----------
-            // int sigLength = signatureSplit[2].length();
-            //-------gets binary data out of signed_by event---------
-            //String sigSplit2 = signatureSplit[2].substring(2, sigLength-2);
-            //System.out.println(sigSplit2);
-            //-------convert to bitmap? or buffered image? or?-------
-            //Bitmap image = BitmapFactory.decodeFile(sigSplit2);
-            //signatureImage.setImageBitmap(image);
         }
-
-        /*boolean getTickStatus1() {
-            return tick1;
-        }
-        boolean getTickStatus2() {
-            return tick2;
-        }
-        boolean getTickStatus3() {
-            return tick3;
-        }*/
     }
-
 }
 
 
