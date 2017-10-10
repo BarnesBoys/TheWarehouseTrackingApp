@@ -3,12 +3,13 @@ package com.example.brooke.thewarehousetrackingapp;
 
 import android.content.Intent;
 
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v7.app.*;
 import android.os.Bundle;
-import android.text.Html;
+import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,66 +28,93 @@ import javax.net.ssl.SSLContext;
 public class TrackingPage extends AppCompatActivity {
 
     protected String trackingNumber = null;
+    boolean tick1,tick2,tick3 = false;
+    ImageView image1, image2, image3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracking_page);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         Intent intent = getIntent();
-
-        //System.err.println("intent: " + intent);
-
-        if(intent == null) {
+        if (intent == null) {
             trackingNumber = "";
-        }
-        else{
+        } else {
             Bundle extras = intent.getExtras();
-            if(extras == null) trackingNumber = "";
+            if (extras == null) trackingNumber = "";
             else trackingNumber = intent.getExtras().getString("tracking_reference");
         }
 
         //to test tracking number has been set
         //System.err.println("tracking_ref is:  " + trackingNumber);
 
-        /**TextView status = (TextView) this.findViewById(R.id.status);
+        //Establish textviews
+        TextView status = (TextView) this.findViewById(R.id.status);
         TextView status2 = (TextView) this.findViewById(R.id.status2);
         TextView status3 = (TextView) this.findViewById(R.id.status3);
         TextView event = (TextView) this.findViewById(R.id.event);
         TextView event2 = (TextView) this.findViewById(R.id.event2);
-        TextView event3 = (TextView) this.findViewById(R.id.event3);**/
-        TextView procStatus = (TextView) this.findViewById(R.id.processed_status);
-        TextView transitStatus = (TextView) this.findViewById(R.id.transit_status);
-        TextView deliveredStatus = (TextView) this.findViewById(R.id.delivered_status);
+        TextView event3 = (TextView) this.findViewById(R.id.event3);
+        TextView dateTime = (TextView) this.findViewById(R.id.dateTime);
+        TextView dateTime2 = (TextView) this.findViewById(R.id.dateTime2);
+        TextView dateTime3 = (TextView) this.findViewById(R.id.dateTime3);
+
+        image1 = (ImageView) findViewById(R.id.imageView1);
+        image2 = (ImageView) findViewById(R.id.imageView2);
+        image3 = (ImageView) findViewById(R.id.imageView3);
+
         //TextView signature = (TextView) this.findViewById(R.id.Signature);
         //ImageView signatureImage = (ImageView) this.findViewById(R.id.signatureView);
 
         //signature.setEnabled(false);
         //signatureImage.setEnabled(false);
 
+        //send textviews to getTrackingDetails class
+        new getTrackingDetails(status, status2, status3, event, event2, event3, dateTime, dateTime2, dateTime3).execute();
 
-        //new getTrackingDetails(status, status2, status3, event, event2, event3, dateTime, dateTime2, dateTime3).execute();
-        new getTrackingDetails(procStatus, transitStatus, deliveredStatus).execute();
-
+        //This small delay is so the images update correctly
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //If stages have been complete put a tick on screen
+        if (tick1) {
+            image1.setImageResource(R.drawable.tick);
+        }
+        if (tick2) {
+            image2.setImageResource(R.drawable.tick);
+        }
+        if (tick3) {
+            image3.setImageResource(R.drawable.tick);
+        }
     }
+
     private class getTrackingDetails extends AsyncTask<String, String, String>{
 
         String result = "";
-        //TextView status,status2,status3,event,event2,event3,dateTime,dateTime2,dateTime3,signature;
-        TextView procStatus, transitStatus,deliverdStatus;
+        TextView status,status2,status3,event,event2,event3,dateTime,dateTime2,dateTime3,signature;
 
         //ImageView signatureImage;
 
-        //getTrackingDetails(TextView status, TextView status2, TextView status3, TextView event, TextView event2, TextView event3, TextView dateTime,
-          //                 TextView dateTime2, TextView dateTime3){
-            getTrackingDetails(TextView procStatus,
-                           TextView transitStatus, TextView deliverdStatus){
-            //this.status = status; this.status2 = status2; this.status3=status3;
-            //this.event = event; this.event2=event2; this.event3=event3;
-            this.procStatus = procStatus; this.transitStatus=transitStatus; this.deliverdStatus=deliverdStatus;
+        //class constructor
+        getTrackingDetails(TextView status, TextView status2, TextView status3, TextView event, TextView event2, TextView event3, TextView dateTime,
+                           TextView dateTime2, TextView dateTime3){
+            this.status = status; this.status2 = status2; this.status3=status3;
+            this.event = event; this.event2=event2; this.event3=event3;
+            this.dateTime = dateTime; this.dateTime2=dateTime2; this.dateTime3=dateTime3;
         }
 
         protected String doInBackground(String... params){
 
             try {
+                //establish connection nzpost
                 URL url = new URL("https://oauth.nzpost.co.nz/as/token.oauth2");
                 HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 
@@ -162,22 +190,24 @@ public class TrackingPage extends AppCompatActivity {
                 //parsing the returned data
                 obj = new JSONObject(responseMessage);
                 JSONArray trackingEvents = obj.getJSONObject("results").getJSONArray("tracking_events") ;
-                //
+
+                //establish the different states of parcel, parcel is picked up
                 if(trackingEvents.length() == 2){
                     System.out.println("tracking events length "+trackingEvents.length());
                     JSONObject pickedUpEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 1);
                     getPickedUpEvent(pickedUpEvent);
-
+                    tick1 = true;
                 }
-                //
+                //parcel is in transit
                 if(trackingEvents.length() == 3) {
                     System.out.println("tracking events length "+trackingEvents.length());
                     JSONObject pickedUpEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 2);
                     getPickedUpEvent(pickedUpEvent);
                     JSONObject transitEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 1);
                     getTransitEvent(transitEvent);
+                    tick1 = true; tick2 = true;
                 }
-                //
+                //parcel is delivered
                 if(trackingEvents.length() == 4) {
                     System.out.println("tracking events length "+trackingEvents.length()+" "+trackingEvents);
                     JSONObject pickedUpEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 3);
@@ -186,6 +216,7 @@ public class TrackingPage extends AppCompatActivity {
                     getTransitEvent(transitEvent);
                     JSONObject deliveredEvent = (JSONObject) trackingEvents.get(trackingEvents.length() - 1);
                     getDeliveredEvent(deliveredEvent);
+                    tick1 = true; tick2 = true; tick3 = true;
                 }
 
                 //JSONObject eventsTest = (JSONObject) trackingEvents.get(trackingEvents.length());
@@ -202,6 +233,8 @@ public class TrackingPage extends AppCompatActivity {
         //---------------------------------------------------------------------
         //Methods for extracting the results from tracking events to display
         //---------------------------------------------------------------------
+
+        //use jason to get info about transit status
         void getPickedUpEvent(JSONObject pickedUpEvent){
             try {
                 String resultPickedUpEvent = pickedUpEvent.getString("event_description");
@@ -213,6 +246,7 @@ public class TrackingPage extends AppCompatActivity {
             }
         }
 
+        //use jason to get info about transit status
         void getTransitEvent(JSONObject transitEvent){
             try {
                 String resultTransitEvent = transitEvent.getString("event_description");
@@ -224,6 +258,7 @@ public class TrackingPage extends AppCompatActivity {
             }
         }
 
+        //use jason to get info about delivered status
         void getDeliveredEvent(JSONObject deliveredEvent){
             try {
                 String resultDeliveredEvent = deliveredEvent.getString("event_description");
@@ -242,32 +277,29 @@ public class TrackingPage extends AppCompatActivity {
             //
             if(result.length == 3) {
                 String[] pickedUpDateTime = result[2].split("T");
-                procStatus.setText(pickedUpDateTime[0] + " " + pickedUpDateTime[1] + "\n" + result[1]);
-                //status.setText(result[0]);
-                //event.setText(result[1]);
+                dateTime.setText(pickedUpDateTime[0] + " " + pickedUpDateTime[1]);
+                status.setText(result[0]);
+                event.setText(result[1]);
             }
             //
             if(result.length == 6) {
                 String[] transitDateTime = result[2].split("T");
                 String[] resultDateTime2 = result[5].split("T");
-                procStatus.setText(transitDateTime[0] + " " + transitDateTime[1] + "\n" + result[1]);
-                transitStatus.setText(resultDateTime2[0] + " " + resultDateTime2[1] + "\n" + result[4]);
-                //status.setText(result[0]); status2.setText(result[3]);
-                //event.setText(result[1]); event2.setText(result[4]);
+                dateTime.setText(transitDateTime[0] + " " + transitDateTime[1]);
+                dateTime2.setText(resultDateTime2[0] + " " + resultDateTime2[1]);
+                status.setText(result[0]); status2.setText(result[3]);
+                event.setText(result[1]); event2.setText(result[4]);
             }
             //
             if(result.length == 9) {
-                String[] dateTimeProcessed = result[2].split("T");
-                String[] dateTimeTransit = result[5].split("T");
-                String[] dateTimeDelivered = result[8].split("T");
-                procStatus.setText(dateTimeProcessed[0] + " " + dateTimeProcessed[1] + "\n" + result[1]);
-                transitStatus.setText(dateTimeTransit[0] + " " + dateTimeTransit[1] + "\n" + result[4]);
-                deliverdStatus.setText(dateTimeDelivered[0] + " " + dateTimeDelivered[1] + "\n" + result[6]);
-                /**dateTime2.setText(resultDateTime2[0] + " " + resultDateTime2[1]);
+                String[] resultDateTime = result[2].split("T");
+                String[] resultDateTime2 = result[5].split("T");
+                String[] resultDateTime3 = result[8].split("T");
+                dateTime.setText(resultDateTime[0] + " " + resultDateTime[1]);
+                dateTime2.setText(resultDateTime2[0] + " " + resultDateTime2[1]);
                 dateTime3.setText(resultDateTime3[0] + " " + resultDateTime3[1]);
-                status.setText(result[0]); event.setText(result[1]);
-                status2.setText(result[3]); event2.setText(result[4]);
-                status3.setText(result[6]); event3.setText(result[7]);**/
+                status.setText(result[0]); status2.setText(result[3]); status3.setText(result[6]);
+                event.setText(result[1]); event2.setText(result[4]); event3.setText(result[7]);
             }
             //String[] signatureSplit = result[3].split(":");
             //signature.setText(signatureSplit[1]);
@@ -282,6 +314,16 @@ public class TrackingPage extends AppCompatActivity {
             //Bitmap image = BitmapFactory.decodeFile(sigSplit2);
             //signatureImage.setImageBitmap(image);
         }
+
+        /*boolean getTickStatus1() {
+            return tick1;
+        }
+        boolean getTickStatus2() {
+            return tick2;
+        }
+        boolean getTickStatus3() {
+            return tick3;
+        }*/
     }
 
 }

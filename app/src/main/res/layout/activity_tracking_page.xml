@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="ContentDescription"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,19 +11,18 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/processed_status"
-        android:layout_width="wrap_content"
+        android:id="@+id/dateTime"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:textStyle="bold"
         android:textSize="20sp"
-        android:hint="@string/not_yet_processed"
-        android:lineSpacingExtra="10dp"
         android:textColor="#000000"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="200dp"/>
+        android:layout_marginLeft="200dp"
+        android:layout_marginStart="200dp"/>
 
-    <?ignore
-        <TextView
+    <TextView
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,24 +46,21 @@
         android:layout_below="@+id/status"
         android:layout_alignLeft="@+id/status"
         android:layout_alignStart="@+id/status" />
-        ?>
 
     <TextView
-        android:id="@+id/transit_status"
+        android:id="@+id/dateTime2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:textSize="20sp"
+        android:textStyle="bold"
         android:textColor="#000000"
-        android:hint="@string/not_yet_in_transit"
-        android:lineSpacingExtra="10dp"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/processed_status"
-        android:layout_alignLeft="@+id/processed_status"
-        android:layout_alignStart="@+id/processed_status" />
+        android:layout_below="@+id/event"
+        android:layout_alignLeft="@+id/event"
+        android:layout_alignStart="@+id/event" />
 
-    <?ignore
-        5<TextView
+    <TextView
         android:id="@+id/status2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -85,24 +84,21 @@
         android:layout_below="@+id/status2"
         android:layout_alignLeft="@+id/status2"
         android:layout_alignStart="@+id/status2" />
-        ?>
 
     <TextView
-        android:id="@+id/delivered_status"
+        android:id="@+id/dateTime3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:textSize="20sp"
-        android:hint="@string/not_yet_delivered"
+        android:textStyle="bold"
         android:textColor="#000000"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/transit_status"
-        android:lineSpacingExtra="10dp"
-        android:layout_alignLeft="@+id/transit_status"
-        android:layout_alignStart="@+id/transit_status" />
+        android:layout_below="@+id/event2"
+        android:layout_alignLeft="@+id/event2"
+        android:layout_alignStart="@+id/event2" />
 
-    <?ignore
-        <TextView
+    <TextView
         android:id="@+id/status3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -126,6 +122,38 @@
         android:layout_below="@+id/status3"
         android:layout_alignLeft="@+id/status3"
         android:layout_alignStart="@+id/status3" />
-        ?>
-    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/circle"
+        android:scaleType="fitXY"
+        android:layout_alignTop="@+id/dateTime"
+        android:layout_toLeftOf="@+id/status"
+        android:layout_toStartOf="@+id/status"
+        android:layout_marginRight="48dp"
+        android:layout_marginEnd="48dp" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/circle"
+        android:scaleType="fitXY"
+        android:layout_alignTop="@+id/dateTime2"
+        android:layout_alignLeft="@+id/imageView1"
+        android:layout_alignStart="@+id/imageView1" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/circle"
+        android:scaleType="fitXY"
+        android:layout_alignTop="@+id/dateTime3"
+        android:layout_alignLeft="@+id/imageView2"
+        android:layout_alignStart="@+id/imageView2"/>
+
+</RelativeLayout>
 </ScrollView>
