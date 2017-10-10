@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "653896619556-1177ibd8lqtm7luapl277nh2fdg9q471.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.brooke.thewarehousetrackingapp",
+            "certificate_hash": "54d1c98e64d2cd792f196098130b3d4ea78e96c7"
+          }
+        },
+        {
           "client_id": "653896619556-epe4ph29jbip382t3lup2dhfqh10otqi.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

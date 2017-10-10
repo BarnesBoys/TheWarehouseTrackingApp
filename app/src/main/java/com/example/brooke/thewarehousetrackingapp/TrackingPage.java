@@ -8,6 +8,9 @@ import android.support.v7.app.*;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,7 +47,6 @@ public class TrackingPage extends AppCompatActivity {
 
         //to test tracking number has been set
         //System.err.println("tracking_ref is:  " + trackingNumber);
-
         TextView status = (TextView) this.findViewById(R.id.status);
         TextView status2 = (TextView) this.findViewById(R.id.status2);
         TextView status3 = (TextView) this.findViewById(R.id.status3);
@@ -145,7 +147,17 @@ public class TrackingPage extends AppCompatActivity {
                     System.err.println(entry.getKey() + " : " + entry.getValue());
                 }
 
-                //return the actuall json data or the error json data
+                // Write a message to the database-------------------------------------------------------------
+                //data is cahced and available locaaly when device loses internet connection
+                //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+                //get instance of database
+                //FirebaseDatabase database = FirebaseDatabase.getInstance();
+                //database reference (could be CUSTOMER ACCOUNT name?>)
+                //DatabaseReference myRef = database.getReference(trackingNumber);
+                //value of reference (WITH all the tracking numbers their ACCOUNT has??)
+                //myRef.setValue("Dayne");
+
+                //return the actual json data or the error json data
                 if(responseCode != 200) in = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
                 else in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
@@ -156,6 +168,7 @@ public class TrackingPage extends AppCompatActivity {
                 //parsing the returned data
                 obj = new JSONObject(responseMessage);
                 JSONArray trackingEvents = obj.getJSONObject("results").getJSONArray("tracking_events") ;
+                System.out.println("tracking events "+trackingEvents);
                 //
                 if(trackingEvents.length() == 2){
                     System.out.println("tracking events length "+trackingEvents.length());
