@@ -20,20 +20,21 @@
         android:textColor="#000000"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="200dp"
-        android:layout_marginStart="200dp"/>
+        android:layout_marginStart="200dp"
+        />
 
     <TextView
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/not_yet_processed"
         android:textSize="20sp"
         android:textColor="#000000"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/dateTime"
         android:layout_alignLeft="@+id/dateTime"
-        android:layout_alignStart="@+id/dateTime" />
+        android:layout_alignStart="@+id/dateTime"
+        />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -49,7 +50,8 @@
         android:layout_marginTop="10dp"
         android:layout_below="@+id/status"
         android:layout_alignLeft="@+id/status"
-        android:layout_alignStart="@+id/status" />
+        android:layout_alignStart="@+id/status"
+        />
 
     <TextView
         android:id="@+id/dateTime2"
@@ -62,20 +64,22 @@
         android:layout_marginTop="20dp"
         android:layout_below="@+id/event"
         android:layout_alignLeft="@+id/event"
-        android:layout_alignStart="@+id/event" />
+        android:layout_alignStart="@+id/event"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/status2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/not_yet_in_transit"
         android:textSize="20sp"
         android:textColor="#000000"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/dateTime2"
         android:layout_alignLeft="@+id/dateTime2"
-        android:layout_alignStart="@+id/dateTime2"/>
+        android:layout_alignStart="@+id/dateTime2"
+        android:visibility="gone"
+/>
 
     <TextView
         android:id="@+id/event2"
@@ -87,7 +91,8 @@
         android:layout_marginTop="10dp"
         android:layout_below="@+id/status2"
         android:layout_alignLeft="@+id/status2"
-        android:layout_alignStart="@+id/status2" />
+        android:layout_alignStart="@+id/status2"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/dateTime3"
@@ -100,20 +105,22 @@
         android:layout_marginTop="20dp"
         android:layout_below="@+id/event2"
         android:layout_alignLeft="@+id/event2"
-        android:layout_alignStart="@+id/event2" />
+        android:layout_alignStart="@+id/event2"
+        android:visibility="gone"/>
 
     <TextView
         android:id="@+id/status3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/not_yet_delivered"
         android:textSize="20sp"
         android:textColor="#000000"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/dateTime3"
         android:layout_alignLeft="@+id/dateTime3"
-        android:layout_alignStart="@+id/dateTime3"/>
+        android:layout_alignStart="@+id/dateTime3"
+        android:visibility="gone"
+/>
 
     <TextView
         android:id="@+id/event3"
@@ -125,7 +132,8 @@
         android:layout_marginTop="10dp"
         android:layout_below="@+id/status3"
         android:layout_alignLeft="@+id/status3"
-        android:layout_alignStart="@+id/status3" />
+        android:layout_alignStart="@+id/status3"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/imageView1"
@@ -137,7 +145,9 @@
         android:layout_toLeftOf="@+id/status"
         android:layout_toStartOf="@+id/status"
         android:layout_marginRight="48dp"
-        android:layout_marginEnd="48dp" />
+        android:layout_marginEnd="48dp"
+        android:visibility="gone"
+        />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -147,7 +157,8 @@
         android:scaleType="fitXY"
         android:layout_alignTop="@+id/dateTime2"
         android:layout_alignLeft="@+id/imageView1"
-        android:layout_alignStart="@+id/imageView1" />
+        android:layout_alignStart="@+id/imageView1"
+        android:visibility="gone"/>
 
     <ImageView
         android:id="@+id/imageView3"
@@ -157,7 +168,8 @@
         android:scaleType="fitXY"
         android:layout_alignTop="@+id/dateTime3"
         android:layout_alignLeft="@+id/imageView2"
-        android:layout_alignStart="@+id/imageView2"/>
+        android:layout_alignStart="@+id/imageView2"
+        android:visibility="gone"/>
 
 </RelativeLayout>
 </ScrollView>
