@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         transitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String trackingNumber = "8963062900186301HAM003DS";
+                String trackingNumber = "8963062903145401AKL003DN11";
                 startActivity(new Intent(MainActivity.this, TrackingPage.class).putExtra("tracking_reference", trackingNumber));
             }
         });
